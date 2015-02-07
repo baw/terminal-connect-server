@@ -1,0 +1,16 @@
+{
+  "name": "terminal-connect-server",
+  "version": "0.0.0",
+  "description": "The server component to display terminal output to a webpage",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:brianweiser/terminal-connect-client.git"
+  },
+  "author": "Brian Weiser",
+  "license": "none",
+  "dependencies": {
+    "express": "^4.11.2",
+    "socket.io": "^1.3.3"
+  }
+}
