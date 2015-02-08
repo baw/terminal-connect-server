@@ -17,11 +17,12 @@ app.get("/", function (req, res) {
 app.use(morgan("combined"));
 app.use(express.static(__dirname + "/public"));
 
-io.on("connection", function (socket) {
+var terminal = io.of("/terminal").on("connection", function (socket) {
     socket.on("terminal-output", function (text) {
-        io.to("web").emit("output", {
-            "text": text
+        web.emit("output", {
+            "line": text
         });
     });
 });
 
+var web = io.of("/web");
