@@ -16,4 +16,12 @@
         pre.appendChild(textNode);
         output.appendChild(pre);
     });
+    
+    socket.on("command", function (data) {
+        var h2 = document.getElementById("command");
+        var command = data.command;
+        var textNode = document.createTextNode(command);
+        
+        h2.appendChild(textNode);
+    });
 })(this);

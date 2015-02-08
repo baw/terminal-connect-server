@@ -18,6 +18,12 @@ app.use(morgan("combined"));
 app.use(express.static(__dirname + "/public"));
 
 var terminal = io.of("/terminal").on("connection", function (socket) {
+    socket.on("command", function (command) {
+        web.emit("command", {
+            "command": command
+        });
+    });
+    
     socket.on("terminal-output", function (text) {
         web.emit("output", {
             "line": text
