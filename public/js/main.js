@@ -2,26 +2,33 @@
     var output = document.getElementById("output");
     var socket = io.connect("localhost:8000/web");
     
-    socket.on("connection", function () {
-        console.log("socket connected");
-    });
-    
-    socket.on("output", function (data) {
-        var pre = document.createElement("pre");
-        var line = data.line;
-        var textNode = document.createTextNode(line);
+    socket.on("error", function (data) {
+        var pre = createPreElementWithText(data.line);
         
-        console.log(line);
+        pre.classList.add("error");
         
-        pre.appendChild(textNode);
         output.appendChild(pre);
     });
     
+    socket.on("output", function (data) {
+        var pre = createPreElementWithText(data.line);
+        
+        output.appendChild(pre);
+    });
+    
+    var commandElement = document.getElementById("command");
     socket.on("command", function (data) {
-        var h2 = document.getElementById("command");
         var command = data.command;
         var textNode = document.createTextNode(command);
         
-        h2.appendChild(textNode);
+        commandElement.appendChild(textNode);
     });
+    
+    var createPreElementWithText = function (text) {
+        var pre = document.createElement("pre");
+        var textNode = document.createTextNode(text);
+        pre.appendChild(textNode);
+        
+        return pre;
+    };
 })(this);

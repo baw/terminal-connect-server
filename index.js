@@ -29,6 +29,12 @@ var terminal = io.of("/terminal").on("connection", function (socket) {
             "line": text
         });
     });
+    
+    socket.on("terminal-error", function (text) {
+        web.emit("error", {
+            "line": text
+        });
+    });
 });
 
 var web = io.of("/web");
