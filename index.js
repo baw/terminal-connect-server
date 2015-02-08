@@ -6,7 +6,9 @@ var morgan = require("morgan");
 
 var PORT = process.env.PORT;
 
-server.listen(PORT);
+server.listen(PORT, function () {
+    console.log("server running on PORT: " + PORT);
+});
 
 app.get("/", function (req, res) {
    res.sendFile(__dirname + "/public/index.html");
@@ -23,4 +25,3 @@ io.on("connection", function (socket) {
     });
 });
 
-console.log("server running on PORT: " + PORT);
