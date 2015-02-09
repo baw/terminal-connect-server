@@ -3,7 +3,11 @@ var app = express();
 var server = require("http").Server(app);
 var io = require("socket.io")(server);
 var morgan = require("morgan");
+var passport = require("passport");
+var GitHubStrategy = require("passport-github").Strategy;
 
+var GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
+var GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 var PORT = process.env.PORT;
 
 server.listen(PORT, function () {
