@@ -33,17 +33,13 @@ require("./app/models/line.js")(app);
 require("./app/models/command.js")(app);
 require("./app/models/user.js")(app);
 
+require("./app/router.js")(app, express);
+
 var PORT = process.env.PORT;
 
 server.listen(PORT, function () {
     console.log("server running on PORT: " + PORT);
 });
-
-app.get("/", function (req, res) {
-   res.sendFile(__dirname + "/public/index.html");
-});
-
-app.use(express.static(__dirname + "/public"));
 
 var terminal = io.of("/terminal").on("connection", function (socket) {
     socket.on("command", function (command) {
