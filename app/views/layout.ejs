@@ -1,0 +1,19 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Terminal Connect - <%-title%></title>
+        <link rel="stylesheet" type="text/css" href="css/main.css">
+    </head>
+    <body>
+        <% if (user === undefined) { %>
+          <a href="/auth/github">Login</a>
+        <% } else { %>
+          <a href="/logout">Logout, <%= user.githubUsername %></a>
+        <% } %>
+        
+        <%-body%>
+        
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/main.js"></script>
+    </body>
+</html>

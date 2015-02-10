@@ -5,6 +5,7 @@ var io = require("socket.io")(server);
 
 var bodyParser   = require('body-parser');
 var cookieParser = require("cookie-parser");
+var expressLayouts = require("express-ejs-layouts");
 var session = require("express-session");
 var mongoose = require("mongoose");
 var morgan = require("morgan");
@@ -13,6 +14,11 @@ var passport = require("passport");
 mongoose.connect(process.env.MONGOHQ_URL || "mongodb://localhost/tc");
 
 app.set("db", mongoose);
+
+app.set("view engine", "ejs");
+app.set("views", __dirname + "/app/views");
+app.set("layout", "layout");
+app.use(expressLayouts);
 
 app.use(morgan("combined"));
 app.use(bodyParser.json());
