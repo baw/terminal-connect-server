@@ -18,9 +18,6 @@ module.exports = function (passport, app) {
         clientSecret: GITHUB_CLIENT_SECRET,
         callbackURL: "http://localhost:8000/auth/github/callback"
     }, function (accessToken, refreshToken, profile, done) {
-        console.log("github profile");
-        console.log(profile);
-        
         process.nextTick(function () {
             User.findOne({ githubID: profile.id }, function (err, user) {
                 if (err) throw err;
