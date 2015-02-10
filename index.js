@@ -2,12 +2,33 @@ var express = require("express");
 var app = express();
 var server = require("http").Server(app);
 var io = require("socket.io")(server);
+
+var bodyParser   = require('body-parser');
+var cookieParser = require("cookie-parser");
+var session = require("express-session");
+var mongoose = require("mongoose");
 var morgan = require("morgan");
 var passport = require("passport");
-var GitHubStrategy = require("passport-github").Strategy;
 
-var GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
-var GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
+mongoose.connect(process.env.MONGOHQ_URL || "mongodb://localhost/tc");
+
+app.set("db", mongoose);
+
+app.use(morgan("combined"));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cookieParser());
+var sessionSecret = process.env.secret || "abc";
+app.use(session({ secret: sessionSecret }));
+
+app.use(passport.initialize());
+app.use(passport.session());
+require("./config/passport.js")(passport, app);
+
+require("./app/models/line.js")(app);
+require("./app/models/command.js")(app);
+require("./app/models/user.js")(app);
+
 var PORT = process.env.PORT;
 
 server.listen(PORT, function () {
@@ -18,7 +39,6 @@ app.get("/", function (req, res) {
    res.sendFile(__dirname + "/public/index.html");
 });
 
-app.use(morgan("combined"));
 app.use(express.static(__dirname + "/public"));
 
 var terminal = io.of("/terminal").on("connection", function (socket) {
