@@ -3,8 +3,9 @@ var Line = require("./line.js");
 
 var commandSchema = mongoose.Schema({
     lines: [Line],
-    userId: { type: String, index: true },
+    name: String,
     public: { type: Boolean, default: true },
+    userId: { type: String, index: true },
     
     createdAt: Date,
     updatedAt: Date
