@@ -8,7 +8,7 @@ var lineSchema = mongoose.Schema({
     updatedAt: Date
 });
 
-commandSchema.pre("save", function (next) {
+lineSchema.pre("save", function (next) {
     var now = new Date();
     
     this.updatedAt = now;
@@ -19,4 +19,4 @@ commandSchema.pre("save", function (next) {
     next();
 });
 
-module.exports = mongooose.model("Line", lineSchema);
+module.exports = mongoose.model("Line", lineSchema);
