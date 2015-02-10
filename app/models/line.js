@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 
 var lineSchema = mongoose.Schema({
     text: String,
-    commandId: String,
+    commandId: { type: String, index: true },
     
     createdAt: Date,
     updatedAt: Date
