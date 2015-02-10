@@ -19,7 +19,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 var sessionSecret = process.env.secret || "abc";
-app.use(session({ secret: sessionSecret }));
+app.use(session({
+    secret: sessionSecret,
+    resave: false,
+    saveUninitialized: false
+}));
 
 app.use(passport.initialize());
 app.use(passport.session());
