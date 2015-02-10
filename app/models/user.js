@@ -5,6 +5,7 @@ var Command = require("./command.js");
 var userSchema = mongoose.Schema({
     commands: [Command],
     email: String,
+    githubID: Number,
     githubUsername: String,
     
     createdAt: Date,
