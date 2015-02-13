@@ -3,10 +3,11 @@ var bcrypt = require("bcrypt-nodejs");
 var Command = require("./command.js");
 
 var userSchema = mongoose.Schema({
-    commands: [{ type: Schema.Types.ObjectId, ref: "Command" }],
+    commands: [{ type: mongoose.Schema.Types.ObjectId, ref: "Command" }],
     email: String,
     githubID: { type: Number, index: true },
     githubUsername: String,
+    apiKey: { type: String, index: true },
     
     createdAt: Date,
     updatedAt: Date

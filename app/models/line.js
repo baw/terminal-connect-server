@@ -2,7 +2,7 @@ var mongoose = require("mongoose");
 
 var lineSchema = mongoose.Schema({
     text: String,
-    commandId: { type: Schema.Types.ObjectId, ref: "Command", index: true },
+    commandId: { type: mongoose.Schema.Types.ObjectId, ref: "Command", index: true },
     
     createdAt: Date,
     updatedAt: Date
