@@ -3,19 +3,18 @@ var Command = require("./models/command.js");
 var User = require("./models/user.js");
 
 
-var checkAuthForCommand = function (commandID, apiKey, callback) {
-    Command.find(commandID, function (err, command) {
+var checkAuthForCommand = function (opts, callback) {
+    Command.find(opts.commandID, function (err, command) {
         if (err) throw err;
         
-        if (command.user.apiKey === apiKey) {
+        if (command.user.apiKey === opts.apiKey) {
             callback();
         } else {
-            socket.emit("error", "Error Code: 1 - Wrong API Key");
-            socket.disconnect();
+            opts.socket.emit("error", "Error Code: 1 - Wrong API Key");
+            opts.socket.disconnect();
         }
     });
-}
-
+};
 
 module.exports = function (io) {
     var terminal = io.of("/terminal").on("connection", function (socket) {
@@ -40,15 +39,23 @@ module.exports = function (io) {
         });
         
         socket.on("terminal-output", function (text, apiKey, commandID) {
-            checkAuthForCommand(commandID, apiKey, function () {
-                web.emit("output", {
-                    "line": text
-                });
+            checkAuthForCommand({
+                    apiKey: apiKey,
+                    commandID: commandID,
+                    socket: socket
+                }, function () {
+                    web.emit("output", {
+                        "line": text
+                    });
             });
         });
         
         socket.on("terminal-error", function (text, apiKey, commandID) {
-            checkAuthForCommand(commandID, apiKey, function () {
+            checkAuthForCommand({
+                apiKey: apiKey,
+                commandID: commandID,
+                socket: socket
+            }, function () {
                 web.emit("error", {
                     "line": text
                 });
