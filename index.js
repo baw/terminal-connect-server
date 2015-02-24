@@ -31,6 +31,8 @@ app.use(session({
     saveUninitialized: false
 }));
 
+app.use(express.static(__dirname + "/public"));
+
 app.use(passport.initialize());
 app.use(passport.session());
 require("./config/passport.js")(passport, app);
