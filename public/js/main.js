@@ -1,6 +1,6 @@
 (function (root) {
     var output = document.getElementById("output");
-    var socket = io.connect("localhost:8000/web");
+    var socket = io.connect("/web");
     
     socket.on("error", function (data) {
         var pre = createPreElementWithText(data.line);
