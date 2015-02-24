@@ -11,7 +11,7 @@ var mongoose = require("mongoose");
 var morgan = require("morgan");
 var passport = require("passport");
 
-mongoose.connect(process.env.MONGOHQ_URL || "mongodb://localhost/tc");
+mongoose.connect(process.env.MONGOLAB_URI || "mongodb://localhost/tc");
 
 app.set("db", mongoose);
 
