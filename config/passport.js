@@ -16,7 +16,7 @@ module.exports = function (passport, app) {
     passport.use(new GitHubStrategy({
         clientID: GITHUB_CLIENT_ID,
         clientSecret: GITHUB_CLIENT_SECRET,
-        callbackURL: "http://localhost:8000/auth/github/callback"
+        callbackURL: "http://connect.brianweiser.io/auth/github/callback"
     }, function (accessToken, refreshToken, profile, done) {
         process.nextTick(function () {
             User.findOne({ githubID: profile.id }, function (err, user) {
