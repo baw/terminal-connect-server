@@ -6,7 +6,7 @@ var GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 
 var User = require("../app/models/user.js");
 
-var createNewUser = function (done) {
+var createNewUser = function (profile, done) {
     uniqueApiKey(function (apiKey) {
         user = new User({
             githubID: profile.id,
@@ -52,7 +52,7 @@ module.exports = function (passport, app) {
                 if (user) {
                     done(null, user);
                 } else {
-                    createNewUser(done);
+                    createNewUser(profile, done);
                 }
             });
         });
