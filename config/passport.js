@@ -1,8 +1,35 @@
+var crypto = require("crypto");
+
 var GitHubStrategy = require("passport-github").Strategy;
 var GITHUB_CLIENT_ID = process.env.GITHUB_CLIENT_ID;
 var GITHUB_CLIENT_SECRET = process.env.GITHUB_CLIENT_SECRET;
 
 var User = require("../app/models/user.js");
+
+var createNewUser = function (done) {
+    uniqueApiKey(function (apiKey) {
+        user = new User({
+            githubID: profile.id,
+            email: profile.emails[0].value,
+            githubUsername: profile.username,
+            apiKey: apiKey
+        });
+        
+        user.save(function (err) {
+            if (err) throw err;
+            
+            done(null, user);
+        });
+    });
+};
+
+var uniqueApiKey = function (callback) {
+    crypto.randomBytes(48, function(ex, buf) {
+        var token = buf.toString('hex');
+        
+        callback(token);
+    });
+};
 
 module.exports = function (passport, app) {
     passport.serializeUser(function (user, done) {
@@ -25,16 +52,7 @@ module.exports = function (passport, app) {
                 if (user) {
                     done(null, user);
                 } else {
-                    user = new User({
-                        githubID: profile.id,
-                        email: profile.emails[0].value,
-                        githubUsername: profile.username
-                    });
-                    user.save(function (err) {
-                        if (err) throw err;
-                        
-                        done(null, user);
-                    });
+                    createNewUser(done);
                 }
             });
         });
