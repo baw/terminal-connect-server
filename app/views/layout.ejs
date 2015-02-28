@@ -9,6 +9,7 @@
           <a href="/auth/github">Login</a>
         <% } else { %>
           <a href="/logout">Logout, <%= user.githubUsername %></a>
+          API Key: <%= user.apiKey %>
         <% } %>
         
         <%-body%>
