@@ -7,7 +7,7 @@ var userSchema = mongoose.Schema({
     email: String,
     githubID: { type: Number, index: true },
     githubUsername: String,
-    apiKey: { type: String, index: true },
+    apiKey: { type: String, index: { unique: true } },
     
     createdAt: Date,
     updatedAt: Date
