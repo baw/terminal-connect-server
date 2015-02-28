@@ -64,4 +64,10 @@ module.exports = function (passport, app) {
             function (req, res) {
                 res.redirect("/");
     });
+    
+    app.get("/logout", function (req, res) {
+        
+        req.logout();
+        res.redirect("/");
+    });
 };
