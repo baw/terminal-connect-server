@@ -10,7 +10,11 @@ var checkAuthForCommand = function (opts, callback) {
         if (command.user.apiKey === opts.apiKey) {
             callback();
         } else {
-            opts.socket.emit("error", "Error Code: 1 - Wrong API Key");
+            var errorText = "Error Code: 1 - Wrong API Key";
+            
+            process.stdout.write(errorText);
+            opts.socket.emit("error", errorText);
+            
             opts.socket.disconnect();
         }
     });
@@ -21,6 +25,8 @@ module.exports = function (io) {
         socket.on("command", function (commandText, key) {
             User.findOne({ apiKey: key }, function (err, user) {
                 if (err) throw err;
+                
+                process.stdout.write("received command from: " + user.githubUsername);
                 
                 var command = new Command({
                     name: commandText,
