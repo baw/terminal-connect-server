@@ -20,11 +20,21 @@ var checkAuthForCommand = function (opts, callback) {
     });
 };
 
+var noUser = function (socket) {
+    var errorText = "Error Code: 2 - No user with that API Key";
+    
+    process.stdout.write(error);
+    socket.emit("error", errorText);
+    
+    socket.disconnect();
+};
+
 module.exports = function (io) {
     var terminal = io.of("/terminal").on("connection", function (socket) {
         socket.on("command", function (commandText, key) {
             User.findOne({ apiKey: key }, function (err, user) {
                 if (err) throw err;
+                if (user === null) return noUser(socket);
                 
                 process.stdout.write("received command from: " + user.githubUsername);
                 
