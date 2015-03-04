@@ -4,11 +4,11 @@ var User = require("./models/user.js");
 
 
 var checkAuthForCommand = function (opts, callback) {
-    Command.find(opts.commandID, function (err, command) {
+    Command.findById(opts.commandID).populate("userId").exec(function (err, command) {
         if (err) throw err;
         
-        if (command.user.apiKey === opts.apiKey) {
             callback();
+        if (command.userId.apiKey === opts.apiKey) {
         } else {
             var errorText = "Error Code: 1 - Wrong API Key For Command";
             
@@ -30,7 +30,7 @@ module.exports = function (io) {
                 
                 var command = new Command({
                     name: commandText,
-                    userId: user.id
+                    userId: user._id
                 });
                 user.commands.push(command);
                 
