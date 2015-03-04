@@ -7,8 +7,8 @@ var checkAuthForCommand = function (opts, callback) {
     Command.findById(opts.commandID).populate("userId").exec(function (err, command) {
         if (err) throw err;
         
-            callback();
         if (command.userId.apiKey === opts.apiKey) {
+            callback(command);
         } else {
             var errorText = "Error Code: 1 - Wrong API Key For Command";
             
@@ -46,13 +46,21 @@ module.exports = function (io) {
         
         socket.on("terminal-output", function (text, apiKey, commandID) {
             checkAuthForCommand({
-                    apiKey: apiKey,
-                    commandID: commandID,
-                    socket: socket
-                }, function () {
-                    web.emit("output", {
-                        "line": text
-                    });
+                apiKey: apiKey,
+                commandID: commandID,
+                socket: socket
+            }, function () {
+                var line = new Line({
+                    text: text,
+                    commandId: command._id
+                });
+                line.save();
+                
+                command.lines.push(line._id);
+                
+                web.emit("output", {
+                    "line": text
+                });
             });
         });
         
