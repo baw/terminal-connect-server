@@ -10,7 +10,7 @@ var checkAuthForCommand = function (opts, callback) {
         if (command.user.apiKey === opts.apiKey) {
             callback();
         } else {
-            var errorText = "Error Code: 1 - Wrong API Key";
+            var errorText = "Error Code: 1 - Wrong API Key For Command";
             
             process.stdout.write(errorText);
             opts.socket.emit("error", errorText);
