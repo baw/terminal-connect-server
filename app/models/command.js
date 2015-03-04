@@ -1,8 +1,7 @@
 var mongoose = require("mongoose");
-var Line = require("./line.js");
 
 var commandSchema = mongoose.Schema({
-    lines: [Line],
+    lines: [{ type: mongoose.Schema.Types.ObjectId, ref: "line" }],
     name: String,
     public: { type: Boolean, default: true },
     userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", index: true },
