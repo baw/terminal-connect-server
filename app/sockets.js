@@ -59,7 +59,7 @@ module.exports = function (io) {
                 apiKey: apiKey,
                 commandID: commandID,
                 socket: socket
-            }, function () {
+            }, function (command) {
                 var line = new Line({
                     text: text,
                     commandId: command._id
