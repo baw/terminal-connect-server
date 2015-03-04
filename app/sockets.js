@@ -13,9 +13,9 @@ var checkAuthForCommand = function (opts, callback) {
             var errorText = "Error Code: 1 - Wrong API Key For Command";
             
             process.stdout.write(errorText);
-            opts.socket.emit("error", errorText);
+            opts.socket.emit("serverError", errorText);
             
-            socket.disconnect();
+            opts.socket.disconnect();
         }
     });
 };
@@ -24,7 +24,7 @@ var noUser = function (socket) {
     var errorText = "Error Code: 2 - No user with that API Key";
     
     process.stdout.write(errorText);
-    socket.emit("error", errorText);
+    socket.emit("serverError", errorText);
     
     socket.disconnect();
 };
