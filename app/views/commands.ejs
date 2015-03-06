@@ -1,0 +1,10 @@
+<%- contentFor("title") %>
+Commands ran by: <%= user.githubUsername %>
+<%- contentFor("body") %>
+<h2>Commands ran by: <%= user.githubUsername %></h2>
+
+<ul>
+<% user.commands.forEach(function (command) { %>
+  <ul><%= command.name %> - <%= command.createdAt %></ul>
+<% }) %>
+</ul>
