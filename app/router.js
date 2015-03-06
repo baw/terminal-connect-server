@@ -1,3 +1,4 @@
+var apiRouter = require("./api_router.js");
 var Command = require("./models/command.js");
 
 var ensureAuthenticated = function (req, res, next) {
@@ -46,5 +47,6 @@ module.exports = function (app, express) {
         });
     });
 
+    app.use("/api", apiRouter);
     app.use(express.static(__dirname + "/public"));
 };
