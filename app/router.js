@@ -1,3 +1,5 @@
+var Command = require("./models/command.js");
+
 var ensureAuthenticated = function (req, res, next) {
     if (req.isAuthenticated()) return next();
     
@@ -20,6 +22,20 @@ module.exports = function (app, express) {
             if (err) throw err;
             
             res.render("commands", {
+                user: user
+            });
+        });
+    });
+    
+    app.get("/command/:id", ensureAuthenticated, function (req, res) {
+        var commandId = req.params["id"];
+        var user = req.user;
+        
+        Command.findById(commandId).populate("lines").exec(function (err, command) {
+            if (err) throw err;
+            
+            res.render("command", {
+                command: command,
                 user: user
             });
         });

@@ -1,0 +1,11 @@
+<%- contentFor("title")%>
+Command: <%= command.name %>
+<%- contentFor("body")%>
+<h2>Command: <%= command.name %></h2>
+<a href="/commands">All commands</a>
+
+<pre>
+  <% command.lines.forEach(function (line) { %>
+    <%= line.text %>
+  <% }); %>
+</pre>
