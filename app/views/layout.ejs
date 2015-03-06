@@ -6,7 +6,7 @@
     </head>
     <body>
         <% if (user === undefined) { %>
-          <a href="/auth/github">Login</a>
+          <a href="/auth/github">Login with GitHub</a>
         <% } else { %>
           <a href="/logout">Logout, <%= user.githubUsername %></a>
           API Key: <%= user.apiKey %>
