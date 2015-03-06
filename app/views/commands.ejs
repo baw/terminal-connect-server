@@ -5,6 +5,10 @@ Commands ran by: <%= user.githubUsername %>
 
 <ul>
 <% user.commands.forEach(function (command) { %>
-  <li><%= command.name %> - <%= command.createdAt %></li>
+  <li>
+    <a href="/command/<%= command._id %>">
+      <%= command.name %> - <%= command.createdAt %>
+    </a>
+  </li>
 <% }) %>
 </ul>
