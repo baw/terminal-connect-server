@@ -28,7 +28,7 @@ module.exports = function (app, express) {
     });
     
     app.get("/command/:id", ensureAuthenticated, function (req, res) {
-        var commandId = req.params["id"];
+        var commandId = req.params.id;
         var user = req.user;
         
         Command.findById(commandId).populate("lines").exec(function (err, command) {
