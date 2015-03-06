@@ -2,6 +2,30 @@ var Line = require("./models/line.js");
 var Command = require("./models/command.js");
 var User = require("./models/user.js");
 
+var addCommand = function (user, commandText) {
+    var command = new Command({
+        name: commandText,
+        userId: user._id
+    });
+    user.commands.push(command);
+    
+    command.save();
+    user.save();
+    
+    return command._id;
+};
+
+var addLine = function (command, text, error) {
+    var line = new Line({
+        commandId: command._id,
+        error: error,
+        text: text
+    });
+    line.save();
+    
+    command.lines.push(line._id);
+    command.save();
+};
 
 var checkAuthForCommand = function (opts, callback) {
     Command.findById(opts.commandID).populate("userId").exec(function (err, command) {
@@ -38,19 +62,11 @@ module.exports = function (io) {
                 
                 process.stdout.write("received command from: " + user.githubUsername);
                 
-                var command = new Command({
-                    name: commandText,
-                    userId: user._id
-                });
-                user.commands.push(command);
-                
-                command.save();
-                user.save();
-                
+                var commandId = addCommand(user, commandText);
                 web.emit("command", {
                     "command": commandText
                 });
-                socket.emit("commandID", command.id);
+                socket.emit("commandID", commandId);
             });
         });
         
@@ -60,13 +76,7 @@ module.exports = function (io) {
                 commandID: commandID,
                 socket: socket
             }, function (command) {
-                var line = new Line({
-                    text: text,
-                    commandId: command._id
-                });
-                line.save();
-                
-                command.lines.push(line._id);
+                addLine(command, text, false);
                 
                 web.emit("output", {
                     "line": text
@@ -79,7 +89,9 @@ module.exports = function (io) {
                 apiKey: apiKey,
                 commandID: commandID,
                 socket: socket
-            }, function () {
+            }, function (command) {
+                addLine(command, text, true);
+                
                 web.emit("error", {
                     "line": text
                 });
