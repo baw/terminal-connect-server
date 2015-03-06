@@ -17,7 +17,7 @@ var addCommand = function (user, commandText) {
 
 var addLine = function (command, text, error) {
     var line = new Line({
-        commandId: command._id,
+        command: command._id,
         error: error,
         text: text
     });
