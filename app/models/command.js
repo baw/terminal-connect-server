@@ -4,7 +4,7 @@ var commandSchema = mongoose.Schema({
     lines: [{ type: mongoose.Schema.Types.ObjectId, ref: "Line" }],
     name: String,
     public: { type: Boolean, default: true },
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: "User", index: true },
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", index: true },
     
     createdAt: Date,
     updatedAt: Date

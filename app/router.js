@@ -31,9 +31,9 @@ module.exports = function (app, express) {
         var commandId = req.params.id;
         var user = req.user;
         
-        Command.findById(commandId).populate("lines userId").exec(function (err, command) {
+        Command.findById(commandId).populate("lines user").exec(function (err, command) {
             if (err) throw err;
-            if (command.userId._id !== user._id) return res.redirect("/");
+            if (command.user._id !== user._id) return res.redirect("/");
             
             res.render("command", {
                 command: command,

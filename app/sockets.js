@@ -5,7 +5,7 @@ var User = require("./models/user.js");
 var addCommand = function (user, commandText) {
     var command = new Command({
         name: commandText,
-        userId: user._id
+        user: user._id
     });
     user.commands.push(command);
     
@@ -28,10 +28,10 @@ var addLine = function (command, text, error) {
 };
 
 var checkAuthForCommand = function (opts, callback) {
-    Command.findById(opts.commandID).populate("userId").exec(function (err, command) {
+    Command.findById(opts.commandID).populate("user").exec(function (err, command) {
         if (err) throw err;
         
-        if (command.userId.apiKey === opts.apiKey) {
+        if (command.user.apiKey === opts.apiKey) {
             callback(command);
         } else {
             var errorText = "Error Code: 1 - Wrong API Key For Command";
