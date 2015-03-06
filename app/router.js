@@ -10,9 +10,13 @@ module.exports = function (app, express) {
     app.get("/", function (req, res) {
         var user = req.user;
         
-        res.render("home", {
-            user: user
-        });
+        if (user === undefined) {
+            res.render("home", {
+                user: undefined
+            });
+        } else {
+            res.redirect("/commands");
+        }
     });
     
     app.get("/commands", ensureAuthenticated, function (req, res) {
