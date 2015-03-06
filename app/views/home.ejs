@@ -2,3 +2,6 @@
 Welcome
 <%- contentFor("body")%>
 <h2>Welcome to Terminal Connect</h2>
+<% if (user !== undefined) { %>
+  <a href="/commands">Your commands</a>
+<% } %>
