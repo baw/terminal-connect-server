@@ -24,7 +24,9 @@ var createNewUser = function (profile, done) {
 };
 
 var uniqueApiKey = function (callback) {
-    crypto.randomBytes(16, function(ex, buf) {
+    crypto.randomBytes(16, function(err, buf) {
+        if (err) throw err;
+        
         var token = buf.toString('hex');
         
         callback(token);
