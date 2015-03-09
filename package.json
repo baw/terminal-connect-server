@@ -28,6 +28,7 @@
     "test": "./node_modules/mocha/bin/mocha"
   },
   "devDependencies": {
+    "chai": "^2.1.1",
     "mocha": "^2.2.0",
     "mocha-mongoose": "^1.0.3",
     "mongodb": "^1.4.33",
