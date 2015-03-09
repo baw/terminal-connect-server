@@ -1,24 +1,13 @@
 var mongoose = require("mongoose");
+var timestamps = require('mongoose-timestamp');
 
 var commandSchema = mongoose.Schema({
     lines: [{ type: mongoose.Schema.Types.ObjectId, ref: "Line" }],
     name: String,
     public: { type: Boolean, default: true },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", index: true },
-    
-    createdAt: Date,
-    updatedAt: Date
+    user: { type: mongoose.Schema.Types.ObjectId, ref: "User", index: true }
 });
 
-commandSchema.pre("save", function (next) {
-    var now = new Date();
-    
-    this.updatedAt = now;
-    if (this.createdAt === undefined) {
-        this.createdAt = now;
-    }
-    
-    next();
-});
+commandSchema.plugin(timestamps);
 
 module.exports = mongoose.model("Command", commandSchema);

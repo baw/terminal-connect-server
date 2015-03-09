@@ -1,5 +1,7 @@
 var mongoose = require("mongoose");
 var bcrypt = require("bcrypt-nodejs");
+var timestamps = require('mongoose-timestamp');
+
 var Command = require("./command.js");
 
 var userSchema = mongoose.Schema({
@@ -7,21 +9,9 @@ var userSchema = mongoose.Schema({
     email: String,
     githubID: { type: Number, index: true },
     githubUsername: String,
-    apiKey: { type: String, index: { unique: true } },
-    
-    createdAt: Date,
-    updatedAt: Date
+    apiKey: { type: String, index: { unique: true } }
 });
 
-userSchema.pre("save", function (next) {
-    var now = new Date();
-    
-    this.updatedAt = now;
-    if (this.createdAt === undefined) {
-        this.createdAt = now;
-    }
-    
-    next();
-});
+userSchema.plugin(timestamps);
 
 module.exports = mongoose.model("User", userSchema);
