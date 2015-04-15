@@ -29,11 +29,13 @@ describe("Line model", function () {
         var command = new Command();
         var line = new Line(lineData);
         line.command = command.id;
-        line.save();
-        
-        lineId = line.id;
-        
-        done();
+        line.save(function (err) {
+          if (err) throw err;
+          
+          lineId = line.id;
+          
+          done();
+        });
     });
     
     it("should save", function () {

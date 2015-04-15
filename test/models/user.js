@@ -29,11 +29,13 @@ describe("User model", function () {
     var userId;
     beforeEach(function (done) {
         var u = new User(userData);
-        u.save();
-        
-        userId = u.id;
-        
-        done();
+        u.save(function (err) {
+          if (err) throw err;
+          
+          userId = u.id;
+          
+          done();
+        });
     });
     
     it("should save", function () {

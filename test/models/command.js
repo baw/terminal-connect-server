@@ -32,11 +32,13 @@ describe("Command model", function () {
         
         c = new Command(commandData);
         c.user = u.id;
-        c.save();
-        
-        commandId = c.id;
-        
-        done();
+        c.save(function (err) {
+          if (err) throw err;
+          
+          commandId = c.id;
+          
+          done();
+        });
     });
     
     it("should save", function () {
