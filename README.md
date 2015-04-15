@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/imamathwiz/terminal-connect-server.svg?branch=master)](https://travis-ci.org/imamathwiz/terminal-connect-server)
 ![Dependencies status](https://david-dm.org/imamathwiz/terminal-connect-server.svg)
 
 Terminal Connect Server
