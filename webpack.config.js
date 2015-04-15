@@ -5,6 +5,7 @@ module.exports = {
     },
     entry: "./js/main.jsx",
     externals: {
+        "io": "io",
         "react": "React",
         "react-router": "ReactRouter"
     },
