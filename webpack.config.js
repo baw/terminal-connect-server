@@ -4,6 +4,10 @@ module.exports = {
         contentBase: __dirname + "/public",
     },
     entry: "./js/main.jsx",
+    externals: {
+        "react": "React",
+        "react-router": "ReactRouter"
+    },
     output: {
         path: __dirname + "/js",
         flename: "main.js"
