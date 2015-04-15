@@ -51,7 +51,6 @@ describe("Line model", function () {
             Line.findById(lineId, function (err, line) {
                 if (err) throw err;
                 
-                expect(line).to.exist;
                 expect(line.text).to.be.not.undefined;
                 
                 done();
