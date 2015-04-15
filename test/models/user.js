@@ -36,6 +36,16 @@ describe("User model", function () {
         done();
     });
     
+    it("should save", function () {
+        User.findById(userId, function (err, user) {
+            if (err) throw err;
+            
+            expect(user).to.exist;
+            
+            done();
+        });
+    });
+    
     describe("commands", function () {
         it("should exist", function (done) {
             User.findById(userId, function (err, user) {

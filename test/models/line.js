@@ -36,11 +36,22 @@ describe("Line model", function () {
         done();
     });
     
+    it("should save", function () {
+        Line.findById(lineId, function (err, line) {
+            if (err) throw err;
+            
+            expect(line).to.exist;
+            
+            done();
+        });
+    });
+    
     describe("text", function () {
         it("should exist", function (done) {
             Line.findById(lineId, function (err, line) {
                 if (err) throw err;
                 
+                expect(line).to.exist;
                 expect(line.text).to.be.not.undefined;
                 
                 done();

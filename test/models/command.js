@@ -39,6 +39,16 @@ describe("Command model", function () {
         done();
     });
     
+    it("should save", function () {
+        Command.findById(commandId, function (err, command) {
+            if (err) throw err;
+            
+            expect(command).to.exist;
+            
+            done();
+        });
+    });
+    
     describe("lines attribute", function () {
         it("should exist", function (done) {
             Command.findById(commandId, function (err, command) {
