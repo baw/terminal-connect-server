@@ -10,4 +10,5 @@ services:
 deploy:
   api_key:
     secure: RJhTx98bJ6thIrlazFXK50D+ng0DCIw3Ne4OLc1aFQl4yS7A22XybVad9sxIK1x9r53QGe/hJRZl3UhQEUR1BtuUhgkfSeca2VUzbFojfnwb0Kb7qxVN/oHazjFw3B1Dnm6/VbP21sXnX8IytQhGbaZ8oPJnejGBx+ChNtVQEcI=
+  app: terminal-connect
   provider: heroku
