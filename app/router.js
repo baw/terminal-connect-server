@@ -7,18 +7,21 @@ var ensureAuthenticated = function (req, res, next) {
     res.redirect("/");
 };
 
+var rootRoute = function (req, res) {
+    var user = req.user;
+    
+    if (user === undefined) {
+        res.render("home", {
+            user: undefined
+        });
+    } else {
+        res.redirect("/commands");
+    }
+};
+
 module.exports = function (app, express) {
-    app.get("/", function (req, res) {
-        var user = req.user;
-        
-        if (user === undefined) {
-            res.render("home", {
-                user: undefined
-            });
-        } else {
-            res.redirect("/commands");
-        }
-    });
+    app.get("/", rootRoute);
+    app.get("/index.html", rootRoute);
     
     app.get("/commands", ensureAuthenticated, function (req, res) {
         var user = req.user;
