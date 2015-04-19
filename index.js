@@ -27,10 +27,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 var sessionSecret = process.env.secret || "abc";
+var RedisStore = require('connect-redis')(session);
+var redisClient = require('heroku-redis-client')();
 app.use(session({
-    secret: sessionSecret,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    secret: sessionSecret,
+    store: new RedisStore({
+        client: redisClient
+    })
 }));
 
 app.use(express.static(__dirname + "/public"));
