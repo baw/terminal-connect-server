@@ -23,10 +23,12 @@
         <%-body%>
 
         <script src="/socket.io/socket.io.js"></script>
-        <% if (process.env.NODE_ENV === "production") { %>
-            <script src="/js/main.min.js"></script>
-        <% } else { %>
-            <script src="/js/main.js"></script>
+        <% if (user !== undefined) { %>
+            <% if (process.env.NODE_ENV === "production") { %>
+                <script src="/js/main.min.js"></script>
+            <% } else { %>
+                <script src="/js/main.js"></script>
+            <% } %>
         <% } %>
     </body>
 </html>
