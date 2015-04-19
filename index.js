@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());
 var sessionSecret = process.env.secret || "abc";
 var RedisStore = require('connect-redis')(session);
-var redisClient = require('heroku-redis-client')();
+var redisClient = require('heroku-redis-client').createClient();
 app.use(session({
     resave: false,
     saveUninitialized: false,
