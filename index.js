@@ -56,7 +56,7 @@ server.listen(PORT, function () {
     console.log("server running on PORT: " + PORT);
 });
 
-require("./app/sockets.js")(server, {
+require("./app/sockets/sockets.js")(server, {
   store: sessionStore,
   secret: sessionSecret
 });
