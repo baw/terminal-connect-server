@@ -1,3 +1,5 @@
+var socketsIO = require("socket.io");
+
 var Line = require("./models/line.js");
 var Command = require("./models/command.js");
 var User = require("./models/user.js");
@@ -53,7 +55,9 @@ var noUser = function (socket) {
     socket.disconnect();
 };
 
-module.exports = function (io) {
+module.exports = function (server) {
+    var io = socketsIO(server);
+    
     var terminal = io.of("/terminal").on("connection", function (socket) {
         socket.on("command", function (commandText, key) {
             User.findOne({ apiKey: key }, function (err, user) {

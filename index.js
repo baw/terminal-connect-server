@@ -3,7 +3,6 @@ require("newrelic");
 var express = require("express");
 var app = express();
 var server = require("http").Server(app);
-var io = require("socket.io")(server);
 
 var bodyParser   = require('body-parser');
 var cookieParser = require("cookie-parser");
@@ -56,4 +55,4 @@ server.listen(PORT, function () {
     console.log("server running on PORT: " + PORT);
 });
 
-require("./app/sockets.js")(io);
+require("./app/sockets.js")(server);
