@@ -55,8 +55,10 @@ var noUser = function (socket) {
     socket.disconnect();
 };
 
-module.exports = function (server) {
+module.exports = function (server, session) {
     var io = socketsIO(server);
+    
+    require("../config/sockets_auth.js")(io, session);
     
     var terminal = io.of("/terminal").on("connection", function (socket) {
         socket.on("command", function (commandText, key) {

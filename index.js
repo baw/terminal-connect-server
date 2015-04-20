@@ -28,13 +28,14 @@ app.use(cookieParser());
 var sessionSecret = process.env.secret || "abc";
 var RedisStore = require('connect-redis')(session);
 var redisClient = require('heroku-redis-client').createClient();
+var sessionStore = new RedisStore({
+    client: redisClient
+});
 app.use(session({
     resave: false,
     saveUninitialized: false,
     secret: sessionSecret,
-    store: new RedisStore({
-        client: redisClient
-    })
+    store: sessionStore
 }));
 
 app.use(express.static(__dirname + "/public"));
@@ -55,4 +56,7 @@ server.listen(PORT, function () {
     console.log("server running on PORT: " + PORT);
 });
 
-require("./app/sockets.js")(server);
+require("./app/sockets.js")(server, {
+  store: sessionStore,
+  secret: sessionSecret
+});
